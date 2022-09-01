@@ -12,7 +12,21 @@ services:
       - cargo-cache:/usr/local/cargo/registry
       - target-cache:/app/target
     command: /bin/sh -c "cargo watch -x run"
-
+  db:
+    image: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    ports:
+      - 3306:3306
+    cap_add:
+      - SYS_NICE
 volumes:
   cargo-cache:
   target-cache:
+  dbdata:
